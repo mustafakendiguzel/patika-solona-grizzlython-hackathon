@@ -22,7 +22,7 @@ export const HomeView: FC = ({}) => {
   const { getUserSOLBalance } = useUserSOLBalanceStore();
 
   const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
-  const { getUserAuthenticate } = useUserAuthenticateStore();
+  const { loggingScreen } = useUserAuthenticateStore();
   useEffect(() => {
     if (wallet.publicKey) {
       console.log(wallet.publicKey.toBase58());
@@ -30,6 +30,8 @@ export const HomeView: FC = ({}) => {
     }
   }, [wallet.publicKey, connection, getUserSOLBalance]);
 
+  const current = isLogginActive ? "Register" : "Login";
+  const currentActive = isLogginActive ? "login" : "register";
   return (
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">

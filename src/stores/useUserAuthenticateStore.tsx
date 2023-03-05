@@ -3,19 +3,19 @@ import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 interface UserAuthenticateStore extends State {
   isLogginActive: boolean;
-  getUserAuthenticate: (isLogginActive: boolean) => void;
+  loggingScreen: (isLogginActive: boolean) => void;
 }
 
 const useUserAuthenticateStore = create<UserAuthenticateStore>((set, _get) => ({
   isLogginActive: true,
-  getUserAuthenticate: async (isLogginActive) => {
+  loggingScreen: async (isLogginActive) => {
     let balance = 0;
     try {
     } catch (e) {
       console.log(`error getting balance: `, e);
     }
     set((s) => {
-      s.isLogginActive = true;
+      s.isLogginActive = isLogginActive;
       console.log(`balance updated, `, balance);
     });
   },
