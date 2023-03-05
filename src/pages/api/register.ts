@@ -9,7 +9,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<Data | { message: string }>
 ) {
   if (!req.body) {
     res.status(400).send({ message: "Body is empty!" });
@@ -22,21 +22,11 @@ export default async function handler(
   }
   const client = await clientPromise;
   const db = client.db("dApp");
-  const { email, password } = req.body;
-  const user = await db.collection("users").findOne({
+  const { email, username, password } = req.body;
+  await db.collection("users").insertOne({
     email,
+    username,
+    password,
   });
-  if (!user) {
-    res.status(400).send({ message: "Not Authenticated!" });
-    return;
-  }
-
-  await res.json({
-    token: jwt.sign(
-      {
-        email,
-      },
-      process.env.JWT_KEY
-    ),
-  });
+  await res.status(201).end();
 }

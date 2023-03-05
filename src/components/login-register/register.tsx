@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import loginImg from "../../../public/login.svg";
 import Image from "next/image";
 import { FC } from "react";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 
+type registerData = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+async function register(data: registerData) {
+  const res = await fetch("api/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (res.status === 201) {
+    await res.ok;
+  }
+}
+
 export const Register: FC = () => {
   const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
   const { loggingScreen } = useUserAuthenticateStore();
+
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="base-container">
       <div className="header">Register</div>
@@ -25,6 +50,10 @@ export const Register: FC = () => {
             <input
               className="text-[#000000]"
               type="text"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.currentTarget.value);
+              }}
               name="username"
               placeholder="username"
             />
@@ -34,6 +63,10 @@ export const Register: FC = () => {
             <input
               className="text-[#000000]"
               type="text"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.currentTarget.value);
+              }}
               name="email"
               placeholder="email"
             />
@@ -43,6 +76,10 @@ export const Register: FC = () => {
             <input
               className="text-[#000000]"
               type="text"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.currentTarget.value);
+              }}
               name="password"
               placeholder="password"
             />
@@ -59,7 +96,11 @@ export const Register: FC = () => {
         </div>
       </div>
       <div className="footer">
-        <button type="button" className="btn">
+        <button
+          onClick={() => register({ email, username, password })}
+          type="button"
+          className="btn"
+        >
           Register
         </button>
       </div>

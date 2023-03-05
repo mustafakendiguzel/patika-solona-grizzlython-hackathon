@@ -4,24 +4,25 @@ import Image from "next/image";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 import { FC } from "react";
 
-type loginType = {
+type loginData = {
   email: string;
   password: string;
 };
 
-async function login(data: loginType) {
-  try {
-    await fetch("api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application:json",
-      },
-      body: JSON.stringify(data),
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      return error.message;
-    }
+async function login(data: loginData) {
+  const res = await fetch("api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (res.status === 200) {
+    await res.json();
+  } else {
+    return new Error("Incorrect username or password. Try again!");
   }
 }
 
