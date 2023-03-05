@@ -1,5 +1,6 @@
 import React from "react";
-// import loginImg from "../../login.svg";
+import loginImg from "../../../public/login.svg";
+import Image from "next/image";
 
 export class Register extends React.Component {
   constructor(props) {
@@ -11,7 +12,14 @@ export class Register extends React.Component {
       <div className="base-container">
         <div className="header">Register</div>
         <div className="content">
-          <div className="image">{/* <img src={loginImg} /> */}</div>
+          <div className="image">
+            <Image
+              src={loginImg}
+              alt="Picture of the author"
+              width="350"
+              height="300"
+            />
+          </div>
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Username</label>
