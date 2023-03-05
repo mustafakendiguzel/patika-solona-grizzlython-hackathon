@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import loginImg from "../../../public/login.svg";
 import Image from "next/image";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 import { FC } from "react";
 
+type loginType = {
+  email: string;
+  password: string;
+};
+
+async function login(data: loginType) {
+  try {
+    await fetch("api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application:json",
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+  }
+}
+
 export const Login: FC = () => {
-  const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
   const { loggingScreen } = useUserAuthenticateStore();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="base-container">
       <div className="header">Login</div>
@@ -21,12 +45,16 @@ export const Login: FC = () => {
         </div>
         <div className="form">
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
               className="text-[#000000]"
               type="text"
-              name="username"
-              placeholder="username"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.currentTarget.value);
+              }}
+              name="email"
+              placeholder="email"
             />
           </div>
           <div className="form-group">
@@ -34,6 +62,10 @@ export const Login: FC = () => {
             <input
               className="text-[#000000]"
               type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.currentTarget.value);
+              }}
               name="password"
               placeholder="password"
             />
@@ -50,7 +82,11 @@ export const Login: FC = () => {
         </div>
       </div>
       <div className="footer">
-        <button type="button" className="login btn place-items-center ">
+        <button
+          onClick={() => login({ email, password })}
+          type="button"
+          className="login btn place-items-center "
+        >
           Login
         </button>
       </div>
