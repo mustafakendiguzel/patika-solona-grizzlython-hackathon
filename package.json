@@ -21,13 +21,16 @@
     "@tailwindcss/typography": "^0.5.9",
     "daisyui": "^1.24.3",
     "date-fns": "^2.29.3",
+    "formik": "^2.2.9",
     "immer": "^9.0.12",
     "mdb-react-ui-kit": "^5.1.0",
     "next": "^13.1.5",
     "next-compose-plugins": "^2.2.1",
+    "next-images": "^1.8.4",
     "next-transpile-modules": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sass": "^1.58.3",
     "zustand": "^3.6.9"
   },
   "devDependencies": {
