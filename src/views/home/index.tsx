@@ -35,7 +35,7 @@ export const HomeView: FC = ({}) => {
   return (
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">
-        <div className="mt-6">
+        <div className="mt-0">
           <div className="login">
             <div className="container">
               {isLogginActive && <Login />}

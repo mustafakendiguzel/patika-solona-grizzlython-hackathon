@@ -47,13 +47,15 @@ export const Register: FC = () => {
               placeholder="password"
             />
           </div>
-          <div className="items-end">Do you have already</div>
-          <button
-            className="text-green-400		"
-            onClick={() => loggingScreen(true)}
-          >
-            &nbsp;&nbsp;account?
-          </button>
+          <div className="switchLoginRegister">
+            Do you have already
+            <button
+              className="text-green-400		"
+              onClick={() => loggingScreen(true)}
+            >
+              &nbsp;&nbsp;account?
+            </button>
+          </div>
         </div>
       </div>
       <div className="footer">

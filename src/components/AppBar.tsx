@@ -96,7 +96,7 @@ export const AppBar: React.FC = () => {
         {/* Nav Links */}
         {/* Wallet & Settings */}
         <div className="navbar-end">
-          <div className="hidden md:inline-flex align-items-center justify-items gap-6">
+          <div className="hidden md:inline-flex align-items-center justify-items gap-6 mr-5">
             <NavElement
               label="Home"
               href="/"
@@ -107,7 +107,9 @@ export const AppBar: React.FC = () => {
               href="/basics"
               navigationStarts={() => setIsNavOpen(false)}
             />
-            <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
+            {isLogginActive && (
+              <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
+            )}
           </div>
           <label
             htmlFor="my-drawer"
@@ -145,7 +147,12 @@ export const AppBar: React.FC = () => {
             ></div>
           </label>
           <div>
-            <span className="absolute block h-0.5 w-12 bg-zinc-600 rotate-90 right-14"></span>
+            {isLogginActive && (
+              <span className="absolute block h-0.5 w-12 bg-zinc-600 rotate-90 right-14"></span>
+            )}
+            {!isLogginActive && (
+              <span className="absolute block h-0.5 w-12 bg-zinc-600 rotate-90 right-12"></span>
+            )}
           </div>
           <div className="dropdown dropdown-end">
             <div

@@ -38,7 +38,7 @@ export const Login: FC = () => {
               placeholder="password"
             />
           </div>
-          <div className="items-end">
+          <div className="switchLoginRegister">
             Don't have an
             <button
               className="text-green-400	"
