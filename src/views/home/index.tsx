@@ -11,7 +11,7 @@ import pkg from "../../../package.json";
 
 // Store
 import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
-import { Login } from "components/login-register";
+import { Login, Register } from "components/login-register";
 
 export const HomeView: FC = ({}) => {
   const wallet = useWallet();
@@ -31,7 +31,7 @@ export const HomeView: FC = ({}) => {
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">
         <div className="mt-6">
-          <Login />
+          <Register />
         </div>
 
         {/* <div className="mt-6">
