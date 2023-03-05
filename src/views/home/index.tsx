@@ -1,6 +1,6 @@
 // Next, React
 import { FC, useEffect, useState } from "react";
-import Link from "next/link";
+import React from "react";
 
 // Wallet
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
@@ -12,6 +12,7 @@ import pkg from "../../../package.json";
 // Store
 import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 import { Login, Register } from "components/login-register";
+import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 
 export const HomeView: FC = ({}) => {
   const wallet = useWallet();
@@ -20,6 +21,8 @@ export const HomeView: FC = ({}) => {
   const balance = useUserSOLBalanceStore((s) => s.balance);
   const { getUserSOLBalance } = useUserSOLBalanceStore();
 
+  const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
+  const { getUserAuthenticate } = useUserAuthenticateStore();
   useEffect(() => {
     if (wallet.publicKey) {
       console.log(wallet.publicKey.toBase58());
@@ -31,7 +34,12 @@ export const HomeView: FC = ({}) => {
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">
         <div className="mt-6">
-          <Register />
+          <div className="login">
+            <div className="container">
+              {isLogginActive && <Login />}
+              {!isLogginActive && <Register />}
+            </div>
+          </div>
         </div>
 
         {/* <div className="mt-6">
