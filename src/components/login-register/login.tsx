@@ -42,7 +42,7 @@ export class Login extends React.Component {
           </div>
         </div>
         <div className="footer">
-          <button type="button" className="btn">
+          <button type="button" className="login btn place-items-center ">
             Login
           </button>
         </div>
