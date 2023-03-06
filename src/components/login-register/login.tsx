@@ -33,7 +33,7 @@ export const Login: FC = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="base-container">
+    <div className="base-container p-12">
       <div className="header">Login</div>
       <div className="content">
         <div className="image">
