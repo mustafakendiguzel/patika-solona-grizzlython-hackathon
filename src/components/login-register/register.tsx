@@ -75,7 +75,7 @@ export const Register: FC = () => {
             <label htmlFor="password">Password</label>
             <input
               className="text-[#000000]"
-              type="text"
+              type="password"
               value={password}
               onChange={(e) => {
                 setPassword(e.currentTarget.value);

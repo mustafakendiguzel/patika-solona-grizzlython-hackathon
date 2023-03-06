@@ -1,11 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
 import clientPromise from "lib/mongodb";
+import bcrypt from "bcrypt";
 
 type Data = {
   token: string;
 };
+async function hashPassword(plaintextPassword) {
+  const hash = await bcrypt.hash(plaintextPassword, 10); // Store hash in the database
+  return hash;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,10 +27,12 @@ export default async function handler(
   const client = await clientPromise;
   const db = client.db("dApp");
   const { email, username, password } = req.body;
+
+  const hashedPassword = await hashPassword(password);
   await db.collection("users").insertOne({
     email,
     username,
-    password,
+    password: hashedPassword,
   });
   await res.status(201).end();
 }

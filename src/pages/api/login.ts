@@ -2,10 +2,19 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import clientPromise from "lib/mongodb";
+import bcrypt from "bcrypt";
 
 type Data = {
   token: string;
 };
+
+function isSamePass(myPlaintextPassword: string, hash: string) {
+  return bcrypt
+    .compare(myPlaintextPassword, hash)
+    .then(function (result: boolean) {
+      return result;
+    });
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,8 +35,15 @@ export default async function handler(
   const user = await db.collection("users").findOne({
     email,
   });
+
   if (!user) {
     res.status(400).send({ message: "Not Authenticated!" });
+    return;
+  }
+  const passMatch = await isSamePass(password, user.password);
+  console.log(passMatch);
+  if (user && !passMatch) {
+    res.status(400).send({ message: "Password is not Match!" });
     return;
   }
 
