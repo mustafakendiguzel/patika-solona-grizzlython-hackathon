@@ -13,6 +13,8 @@ const WalletMultiButtonDynamic = dynamic(
   { ssr: false }
 );
 
+async function logout() {}
+
 export const AppBar: React.FC = () => {
   const { autoConnect, setAutoConnect } = useAutoConnect();
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -200,6 +202,9 @@ export const AppBar: React.FC = () => {
                     />
                   </label>
                   <NetworkSwitcher />
+                  <label className="logout cursor-pointer label justify-center transition ease-in-out delay-50 dark:md:hover:bg-fuchsia-600">
+                    <a onClick={() => console.log("sd")}>Logout</a>
+                  </label>
                 </div>
               </li>
             </ul>

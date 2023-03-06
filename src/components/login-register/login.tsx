@@ -3,6 +3,7 @@ import loginImg from "../../../public/login.svg";
 import Image from "next/image";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 import { FC } from "react";
+import { useRouter } from "next/router";
 
 type loginData = {
   email: string;
@@ -20,9 +21,9 @@ async function login(data: loginData) {
   });
 
   if (res.status === 200) {
-    await res.json();
-  } else {
-    return new Error("Incorrect username or password. Try again!");
+    const response = await res.json();
+    localStorage.setItem("token", response.token);
+    return response;
   }
 }
 
@@ -31,7 +32,8 @@ export const Login: FC = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
+  const homePage = "/basics";
   return (
     <div className="base-container p-12">
       <div className="header">Login</div>
@@ -84,7 +86,11 @@ export const Login: FC = () => {
       </div>
       <div className="footer">
         <button
-          onClick={() => login({ email, password })}
+          onClick={async () =>
+            await login({ email, password }).then((res) => {
+              if (res) router.replace(homePage);
+            })
+          }
           type="button"
           className="login btn place-items-center "
         >

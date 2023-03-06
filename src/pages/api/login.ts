@@ -4,8 +4,12 @@ import jwt from "jsonwebtoken";
 import clientPromise from "lib/mongodb";
 import bcrypt from "bcrypt";
 
-type Data = {
+export type loginData = {
   token: string;
+};
+
+export type errorData = {
+  message: string;
 };
 
 function isSamePass(myPlaintextPassword: string, hash: string) {
@@ -18,7 +22,7 @@ function isSamePass(myPlaintextPassword: string, hash: string) {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<loginData | errorData>
 ) {
   if (!req.body) {
     res.status(400).send({ message: "Body is empty!" });

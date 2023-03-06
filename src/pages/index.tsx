@@ -4,7 +4,7 @@ import { HomeView } from "../views";
 import { routeBefore } from "./_app";
 
 const Home: NextPage = (props) => {
-  // routeBefore();
+  routeBefore();
   return (
     <div>
       <Head>

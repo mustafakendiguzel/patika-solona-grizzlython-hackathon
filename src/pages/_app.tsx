@@ -22,7 +22,6 @@ function authRequired(): boolean {
 function isLoginPage(): boolean {
   const router = useRouter();
   const loginPage = "/login";
-  console.log(router.asPath);
   if (loginPage === router.asPath) return true;
   return false;
 }
@@ -40,7 +39,7 @@ export function routeBefore() {
 }
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-  // routeBefore();
+  routeBefore();
   const loginPage = isLoginPage();
   return (
     <>
