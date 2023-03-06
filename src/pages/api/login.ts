@@ -45,7 +45,6 @@ export default async function handler(
     return;
   }
   const passMatch = await isSamePass(password, user.password);
-  console.log(passMatch);
   if (user && !passMatch) {
     res.status(400).send({ message: "Password is not Match!" });
     return;

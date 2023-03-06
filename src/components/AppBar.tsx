@@ -6,6 +6,8 @@ import { useAutoConnect } from "../contexts/AutoConnectProvider";
 import NetworkSwitcher from "./NetworkSwitcher";
 import NavElement from "./nav-element";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
+import useCurrentUserStore from "stores/useCurrentUserStore";
+import { useRouter } from "next/router";
 
 const WalletMultiButtonDynamic = dynamic(
   async () =>
@@ -13,10 +15,12 @@ const WalletMultiButtonDynamic = dynamic(
   { ssr: false }
 );
 
-async function logout() {}
-
 export const AppBar: React.FC = () => {
   const { autoConnect, setAutoConnect } = useAutoConnect();
+  const { setUser } = useCurrentUserStore();
+  const router = useRouter();
+  const user = useCurrentUserStore((s) => s.user);
+  console.log(user);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
   const { loggingScreen } = useUserAuthenticateStore();
@@ -105,17 +109,13 @@ export const AppBar: React.FC = () => {
               navigationStarts={() => setIsNavOpen(false)}
             />
 
-            {isLogginActive && (
-              <NavElement
-                label="Basics"
-                href="/basics"
-                navigationStarts={() => setIsNavOpen(false)}
-              />
-            )}
+            <NavElement
+              label="Basics"
+              href="/basics"
+              navigationStarts={() => setIsNavOpen(false)}
+            />
 
-            {isLogginActive && (
-              <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
-            )}
+            <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
           </div>
           <label
             htmlFor="my-drawer"
@@ -203,7 +203,16 @@ export const AppBar: React.FC = () => {
                   </label>
                   <NetworkSwitcher />
                   <label className="logout cursor-pointer label justify-center transition ease-in-out delay-50 dark:md:hover:bg-fuchsia-600">
-                    <a onClick={() => console.log("sd")}>Logout</a>
+                    <a
+                      onClick={() => {
+                        setUser(null);
+                        localStorage.setItem("token", null);
+                        localStorage.setItem("user", null);
+                        router.replace("/login");
+                      }}
+                    >
+                      Logout
+                    </a>
                   </label>
                 </div>
               </li>

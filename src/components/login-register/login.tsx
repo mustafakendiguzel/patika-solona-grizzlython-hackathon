@@ -4,6 +4,7 @@ import Image from "next/image";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 import { FC } from "react";
 import { useRouter } from "next/router";
+import useCurrentUserStore from "stores/useCurrentUserStore";
 
 type loginData = {
   email: string;
@@ -23,13 +24,32 @@ async function login(data: loginData) {
   if (res.status === 200) {
     const response = await res.json();
     localStorage.setItem("token", response.token);
+    return { token: response.token, user: data };
+  }
+}
+
+async function getCurrentUser(token: string) {
+  const res = await fetch("api/currentUser", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  if (res.status === 200) {
+    const response = await res.json();
     return response;
+  } else {
+    return new Error("Error");
   }
 }
 
 export const Login: FC = () => {
   const { loggingScreen } = useUserAuthenticateStore();
-
+  const user = useCurrentUserStore((s) => s.user);
+  const { setUser } = useCurrentUserStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -86,11 +106,20 @@ export const Login: FC = () => {
       </div>
       <div className="footer">
         <button
-          onClick={async () =>
-            await login({ email, password }).then((res) => {
-              if (res) router.replace(homePage);
-            })
-          }
+          onClick={async () => {
+            const res = await login({ email, password });
+            if (res.token) {
+              try {
+                const user = await getCurrentUser(res.token);
+                localStorage.setItem("user", JSON.stringify(user));
+                const usera = localStorage.getItem("user");
+                console.log(usera);
+              } catch (error) {
+                console.log(error);
+              }
+              router.replace(homePage);
+            }
+          }}
           type="button"
           className="login btn place-items-center "
         >

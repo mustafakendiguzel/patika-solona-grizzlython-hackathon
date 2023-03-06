@@ -11,6 +11,7 @@ require("@solana/wallet-adapter-react-ui/styles.css");
 require("../styles/globals.css");
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import useCurrentUserStore from "stores/useCurrentUserStore";
 
 function authRequired(): boolean {
   const router = useRouter();
@@ -30,9 +31,11 @@ export function routeBefore() {
   const router = useRouter();
   const authRequiredForRoute = authRequired();
   useEffect(() => {
-    if (authRequiredForRoute) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(authRequiredForRoute + "user" + user);
+    if (authRequiredForRoute && !user) {
       router.replace("/login");
-    } else {
+    } else if (user && !authRequiredForRoute) {
       router.replace("/");
     }
   }, []);
@@ -41,6 +44,7 @@ export function routeBefore() {
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   routeBefore();
   const loginPage = isLoginPage();
+
   return (
     <>
       <Head>
