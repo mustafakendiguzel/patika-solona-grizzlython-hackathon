@@ -204,6 +204,7 @@ export const AppBar: React.FC = () => {
                   <NetworkSwitcher />
                   <label className="logout cursor-pointer label justify-center transition ease-in-out delay-50 dark:md:hover:bg-fuchsia-600">
                     <a
+                      className="border-2 border-x-slate-100 pl-5 pr-5"
                       onClick={() => {
                         setUser(null);
                         localStorage.setItem("token", null);
