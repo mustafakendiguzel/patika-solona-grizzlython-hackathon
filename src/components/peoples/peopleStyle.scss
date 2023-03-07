@@ -1,15 +1,24 @@
 .base-containers {
   display: flex;
   overflow: auto;
+  .genelGrid {
+    transition: color 5s ease-in-out, box-shadow 5s ease-in-out;
 
+    .card {
+      &:hover {
+        background-color: rgb(34, 2, 61);
+      }
+    }
+  }
   .followButton {
-    background-color: #1a5d89;
+    background-color: #16a22d;
     color: white;
-    transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, box-shadow 0.1s ease-in-out;
 
     &:hover {
-      box-shadow: inset 0 0 0 0 #000;
-      background-color: #86c1e9;
+      box-shadow: inset 0 0 0 0 #16a22d;
+      color: black;
+      background-color: whitesmoke;
     }
   }
 }
