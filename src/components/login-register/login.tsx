@@ -28,7 +28,7 @@ async function login(data: loginData) {
   }
 }
 
-async function getCurrentUser(token: string) {
+export async function getCurrentUser(token: string) {
   const res = await fetch("api/currentUser", {
     method: "POST",
     headers: {
@@ -59,7 +59,7 @@ export const Login: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const homePage = "/basics";
+  const homePage = "/";
   return (
     <div className="base-container p-12">
       <div className="header">Login</div>
@@ -118,8 +118,6 @@ export const Login: FC = () => {
               try {
                 const user = await getCurrentUser(res.token);
                 localStorage.setItem("user", JSON.stringify(user));
-                const usera = localStorage.getItem("user");
-                console.log(usera);
               } catch (error) {
                 console.log(error);
               }

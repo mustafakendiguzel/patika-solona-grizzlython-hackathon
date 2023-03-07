@@ -12,6 +12,7 @@ require("../styles/globals.css");
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useCurrentUserStore from "stores/useCurrentUserStore";
+import { getCurrentUser } from "components/login-register/login";
 
 function authRequired(): boolean {
   const router = useRouter();
@@ -27,21 +28,29 @@ function isLoginPage(): boolean {
   return false;
 }
 
-export function routeBefore() {
+export async function routeBefore() {
   const router = useRouter();
   const authRequiredForRoute = authRequired();
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log(authRequiredForRoute + "user" + user);
-    if (authRequiredForRoute && !user) {
-      router.replace("/login");
-    } else if (user && !authRequiredForRoute) {
-      router.replace("/");
-    }
+    const token = localStorage.getItem("token");
+    getCurrentUser(token).then((res) => {
+      if (res instanceof Error) {
+        console.log(res.message);
+        if (authRequiredForRoute) {
+          router.replace("/login");
+        }
+      } else {
+        if (!authRequiredForRoute) {
+          router.replace("/");
+        }
+      }
+    });
   }, []);
 }
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
+  try {
+  } catch (error) {}
   routeBefore();
   const loginPage = isLoginPage();
 
