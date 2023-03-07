@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import loginImg from "../../../public/login.svg";
 import Image from "next/image";
 import { FC } from "react";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
+import { useRouter } from "next/router";
 
 type registerData = {
   email: string;
@@ -21,12 +22,15 @@ async function register(data: registerData) {
   });
   if (res.status === 201) {
     await res.ok;
+  } else {
+    return new Error("error");
   }
 }
 
 export const Register: FC = () => {
   const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
   const { loggingScreen } = useUserAuthenticateStore();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -97,7 +101,13 @@ export const Register: FC = () => {
       </div>
       <div className="footer">
         <button
-          onClick={() => register({ email, username, password })}
+          onClick={async () => {
+            try {
+              await register({ email, username, password });
+              await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 sec
+              router.reload();
+            } catch (error) {}
+          }}
           type="button"
           className="btn"
         >
