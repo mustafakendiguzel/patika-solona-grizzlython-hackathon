@@ -35,7 +35,6 @@ export async function routeBefore() {
     const token = localStorage.getItem("token");
     getCurrentUser(token).then((res) => {
       if (res instanceof Error) {
-        console.log(res.message);
         if (authRequiredForRoute) {
           router.replace("/login");
         }
