@@ -6,6 +6,8 @@ import { AppBar } from "../components/AppBar";
 import { ContentContainer } from "../components/ContentContainer";
 import { Footer } from "../components/Footer";
 import "../components/login-register/style.scss";
+import "../components/peoples/peopleStyle.scss";
+
 import Notifications from "../components/Notification";
 require("@solana/wallet-adapter-react-ui/styles.css");
 require("../styles/globals.css");
