@@ -38,6 +38,12 @@ async function getCurrentUser(token: string) {
     },
   });
 
+  // const res2 = await fetch("api/user", {
+  //   method: "GET",
+  // });
+  // const userRes: Array<String> = await res2.json();
+  // console.log(userRes.map((x) => x));
+
   if (res.status === 200) {
     const response = await res.json();
     return response;
