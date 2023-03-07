@@ -53,6 +53,7 @@ export default async function handler(
   await res.json({
     token: jwt.sign(
       {
+        id: user._id,
         email,
       },
       process.env.JWT_KEY
