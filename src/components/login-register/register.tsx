@@ -23,7 +23,7 @@ async function register(data: registerData) {
   if (res.status === 201) {
     await res.ok;
   } else {
-    return new Error("error");
+    throw await res.json();
   }
 }
 
@@ -106,7 +106,9 @@ export const Register: FC = () => {
               await register({ email, username, password });
               await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 sec
               router.reload();
-            } catch (error) {}
+            } catch (error) {
+              console.log("Error", error.message);
+            }
           }}
           type="button"
           className="btn"

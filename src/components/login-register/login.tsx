@@ -108,7 +108,7 @@ export const Login: FC = () => {
         <button
           onClick={async () => {
             const res = await login({ email, password });
-            if (res.token) {
+            if (res && res.token) {
               try {
                 const user = await getCurrentUser(res.token);
                 localStorage.setItem("user", JSON.stringify(user));

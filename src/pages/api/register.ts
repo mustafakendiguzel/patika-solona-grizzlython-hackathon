@@ -28,6 +28,14 @@ export default async function handler(
   const db = client.db("dApp");
   const { email, username, password } = req.body;
 
+  const emailIsExist = await db.collection("users").findOne({
+    email,
+  });
+
+  if (emailIsExist) {
+    res.status(400).send({ message: "This Email Already in Use!" });
+  }
+
   const hashedPassword = await hashPassword(password);
   await db.collection("users").insertOne({
     email,
