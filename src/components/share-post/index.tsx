@@ -18,8 +18,9 @@ export const PostList: FC = () => {
       const data = await fetch(`api/upload`, {
         method: "POST",
         body: formData,
+      }).then((data) => {
+        const file = data.json();
       });
-      console.log(data);
     } catch (error: any) {
       console.log(error.response?.data);
     }
@@ -53,18 +54,21 @@ export const PostList: FC = () => {
               )}
             </div>
           </label>
-          {/* <div>
-            {profilePicture && (
-              <Image
-                className="rounded-full"
-                src={profilePicture}
-                alt="Picture of the author"
-                width="350"
-                height="300"
-              />
-            )}
-          </div> */}
+          <div className="pt-5 flex flex-col align-center text-center justify-center ">
+            <label className="pb-5">
+              <input
+                className="w-full text-[#000] rounded-md"
+                type="text"
+              ></input>
+            </label>
 
+            <label className="pb-5">
+              <input
+                className="w-full text-[#000] rounded-md"
+                type="text"
+              ></input>
+            </label>
+          </div>
           <div className="flex justify-center pt-3">
             <button
               onClick={handleUpload}
@@ -79,15 +83,4 @@ export const PostList: FC = () => {
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const props = { dirs: [] };
-  try {
-    const dirs = await fs.readdir(path.join(process.cwd(), "/public/images"));
-    props.dirs = dirs as any;
-    return { props };
-  } catch (error) {
-    return { props };
-  }
 };

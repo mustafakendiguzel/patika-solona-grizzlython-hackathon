@@ -39,8 +39,12 @@ export default async function handler(
   try {
     await fs.readdir(path.join(process.cwd() + "/public", "/images"));
   } catch (error) {
-    await fs.mkdir(path.join(process.cwd() + "/public", "/images"));
+    const file = await fs.mkdir(
+      path.join(process.cwd() + "/public", "/images")
+    );
+    console.log(file);
   }
-  await readFile(req, true);
-  res.json({ done: "ok" });
+  fs;
+  const file = await readFile(req, true);
+  res.json({ fileUrl: file.files.myImage.newFilename });
 }
