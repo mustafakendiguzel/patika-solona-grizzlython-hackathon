@@ -3,18 +3,6 @@ import Image from "next/image";
 import profilePicture from "../../../public/profile-picture.jpg";
 import { getCurrentUser } from "components/login-register/login";
 
-async function randomImage() {
-  const res = await fetch("https://randomuser.me/api/", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
-  const response = await res.json();
-  return await response.results[0].picture.large;
-}
-
 async function getAllUser(currentUserId: string) {
   const allUser = await fetch("api/user", {
     method: "GET",
@@ -61,15 +49,11 @@ async function unFollowUser(id: string, followId: string) {
 }
 
 export const PeopleList: FC = () => {
-  const [image, setImage] = useState(null);
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [follow, setFollow] = useState(null);
 
   useEffect(() => {
-    randomImage().then((imageLink) => {
-      setImage(imageLink);
-    });
     const token = localStorage.getItem("token");
     getCurrentUser(token)
       .then((currentUser) => {
@@ -95,7 +79,7 @@ export const PeopleList: FC = () => {
                 {user.username}
               </div>
               <div>
-                {image && (
+                {profilePicture && (
                   <Image
                     className="rounded-full"
                     src={profilePicture}
