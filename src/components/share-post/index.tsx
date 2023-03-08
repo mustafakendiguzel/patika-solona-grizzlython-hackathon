@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
-import Image from "next/image";
-import profilePicture from "../../../public/profile-picture.jpg";
-import { getCurrentUser } from "components/login-register/login";
+import { GetServerSideProps } from "next";
+import path from "path";
+import fs from "fs/promises";
 
 export const PostList: FC = () => {
   const [uploading, setUploading] = useState(false);
@@ -79,4 +79,15 @@ export const PostList: FC = () => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const props = { dirs: [] };
+  try {
+    const dirs = await fs.readdir(path.join(process.cwd(), "/public/images"));
+    props.dirs = dirs as any;
+    return { props };
+  } catch (error) {
+    return { props };
+  }
 };

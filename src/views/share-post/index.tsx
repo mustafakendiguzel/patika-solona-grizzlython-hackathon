@@ -1,7 +1,7 @@
 import { PostList } from "components/share-post";
 import { FC } from "react";
 
-export const SharePostView: FC = ({}) => {
+export const SharePostView: FC = () => {
   return (
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col w-full">
