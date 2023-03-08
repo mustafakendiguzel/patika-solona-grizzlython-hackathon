@@ -8,9 +8,14 @@ export const PostList: FC = () => {
   return (
     <div className="flex flex-col base-containers pt-5">
       <div className="genelGrid">
-        <div className="px-5 py-5 card mx-10 flex flex-col border-solid border-2 border-slate-400d">
-          <div className="name self-center pb-5 underline decoration-[#a742e0] decoration-2 underline-offset-4 font-bold"></div>
-          <div className="h-80 w-80"></div>
+        <div className="px-5 py-5 card mx-10  flex flex-col border-solid border-2 border-slate-400d">
+          <div className="name self-center pb-5 underline decoration-[#a742e0] decoration-2 underline-offset-4 font-bold">
+            SELECT IMAGE{" "}
+          </div>
+          <label>
+            <input type="file" hidden onChange={({ target }) => {}} />
+            <div className="w-80 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer"></div>
+          </label>
           {/* <div>
             {profilePicture && (
               <Image
@@ -22,6 +27,7 @@ export const PostList: FC = () => {
               />
             )}
           </div> */}
+
           <div className="flex justify-center pt-3">
             <button
               onClick={() => {}}
