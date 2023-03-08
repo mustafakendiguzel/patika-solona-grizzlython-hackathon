@@ -20,12 +20,6 @@ export default async function handler(
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
     var payload;
-    const user = await db.collection("users").findOne(
-      {
-        _id: new ObjectId(payload.id as string),
-      },
-      { projection: { password: 0 } }
-    );
     try {
       payload = await jwt.verify(bearerToken, jwtKey);
     } catch (e) {
@@ -35,6 +29,12 @@ export default async function handler(
       return res.status(400).end();
     }
 
+    const user = await db.collection("users").findOne(
+      {
+        _id: new ObjectId(payload.id as string),
+      },
+      { projection: { password: 0 } }
+    );
     return res.status(200).json(user);
   }
   return res.status(400).json({ message: "Bearer is undefined" });

@@ -30,18 +30,17 @@ export default async function handler(
     // followers
     const followers = await Collection.findOneAndUpdate(
       {
-        _id: new ObjectId(userId as string),
-        following: { $nin: [followId] },
+        _id: new ObjectId(followId as string),
       },
-      { $addToSet: { followers: followId as string } },
+      { $addToSet: { followers: userId as string } },
       { projection: { password: 0 }, returnDocument: "after" }
     );
     //following
     const following = await Collection.findOneAndUpdate(
       {
-        _id: new ObjectId(followId as string),
+        _id: new ObjectId(userId as string),
       },
-      { $addToSet: { following: userId as string } },
+      { $addToSet: { following: followId as string } },
       { projection: { password: 0 }, returnDocument: "after" }
     );
     return await res

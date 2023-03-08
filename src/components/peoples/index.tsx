@@ -15,12 +15,15 @@ async function randomImage() {
   return await response.results[0].picture.large;
 }
 
-async function getAllUser() {
+async function getAllUser(currentUserId: string) {
   const allUser = await fetch("api/user", {
     method: "GET",
   });
   const users: Array<String> = await allUser.json();
-  return users;
+  const filteredUser = users.filter((user: any) => {
+    return user._id.toString() !== currentUserId;
+  });
+  return filteredUser;
 }
 
 async function getUser(id: string) {
@@ -44,16 +47,40 @@ async function followUser(id: string, followId: string) {
   return user;
 }
 
+async function unFollowUser(id: string, followId: string) {
+  const findUser = await fetch(`api/user/unfollow/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ followId }),
+  });
+  const user = await findUser.json();
+  return user;
+}
+
 export const PeopleList: FC = () => {
   const [image, setImage] = useState(null);
   const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [follow, setFollow] = useState(null);
+
   useEffect(() => {
     randomImage().then((imageLink) => {
       setImage(imageLink);
     });
-    getAllUser().then((users) => {
-      setUsers(users);
-    });
+    const token = localStorage.getItem("token");
+    getCurrentUser(token)
+      .then((currentUser) => {
+        setCurrentUser(currentUser);
+        return currentUser;
+      })
+      .then((user) => {
+        getAllUser(user._id).then((users) => {
+          setUsers(users);
+        });
+      });
   }, []);
   return (
     <div className="flex flex-col base-containers pt-5">
@@ -81,16 +108,30 @@ export const PeopleList: FC = () => {
               <div className="flex justify-center pt-3">
                 <button
                   onClick={() => {
-                    const token = localStorage.getItem("token");
-                    getCurrentUser(token).then((currentUser) => {
-                      followUser(currentUser.id, user._id).then((res) => {
-                        console.log(res);
+                    if (
+                      currentUser.following &&
+                      currentUser.following.includes(user._id)
+                    ) {
+                      unFollowUser(currentUser._id, user._id).then(() => {
+                        setFollow("FOLLOW");
                       });
-                    });
+                    } else {
+                      followUser(currentUser._id, user._id).then((res) => {
+                        setFollow("UNFOLLOW");
+                      });
+                    }
                   }}
                   className="followButton mt-2 px-5 rounded-md font-medium "
                 >
-                  FOLLOW
+                  {currentUser.following &&
+                    currentUser.following.includes(user._id) && (
+                      <p>{follow || "UNFOLLOW"}</p>
+                    )}
+                  {currentUser.following &&
+                    !currentUser.following.includes(user._id) && (
+                      <p>{follow || "FOLLOW"}</p>
+                    )}
+                  {!currentUser.following && <p>{follow || "FOLLOW"}</p>}
                 </button>
               </div>
             </div>
