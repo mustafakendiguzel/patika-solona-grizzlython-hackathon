@@ -20,9 +20,12 @@ export default async function handler(
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
     var payload;
-    const user = await db.collection("users").findOne({
-      _id: new ObjectId(payload.id as string),
-    });
+    const user = await db.collection("users").findOne(
+      {
+        _id: new ObjectId(payload.id as string),
+      },
+      { projection: { password: 0 } }
+    );
     try {
       payload = await jwt.verify(bearerToken, jwtKey);
     } catch (e) {
