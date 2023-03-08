@@ -15,13 +15,16 @@ export const PostList: FC = () => {
       const formData = new FormData();
       formData.append("myImage", selectedFile);
       //  const { data } = await fetch("/api/image");
-      //  console.log(data);
+      const data = await fetch(`api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      console.log(data);
     } catch (error: any) {
       console.log(error.response?.data);
     }
     setUploading(false);
   };
-  useEffect(() => {}, []);
   return (
     <div className="flex flex-col base-containers pt-5">
       <div className="genelGrid">
@@ -37,6 +40,7 @@ export const PostList: FC = () => {
                 if (target.files) {
                   const file = target.files[0];
                   setSelectedImage(URL.createObjectURL(file));
+                  console.log(selectedImage);
                   setSelectedFile(file);
                 }
               }}
