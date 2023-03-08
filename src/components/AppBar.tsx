@@ -119,6 +119,11 @@ export const AppBar: React.FC = () => {
               href="/peoples"
               navigationStarts={() => setIsNavOpen(false)}
             />
+            <NavElement
+              label="Share Post"
+              href="/share-post"
+              navigationStarts={() => setIsNavOpen(false)}
+            />
 
             <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
           </div>
