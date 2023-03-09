@@ -13,6 +13,7 @@ import pkg from "../../../package.json";
 import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 import { Login, Register } from "components/login-register";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
+import { ShowPostList } from "components/show-post";
 
 export const HomeView: FC = ({}) => {
   const wallet = useWallet();
@@ -34,17 +35,9 @@ export const HomeView: FC = ({}) => {
   const currentActive = isLogginActive ? "login" : "register";
   return (
     <div className="md:hero mx-auto p-4">
-      <div className="md:hero-content flex flex-col">
-        <div className="mt-0">
-          <div className="login">
-            <div className="container">
-              {isLogginActive && <Login />}
-              {!isLogginActive && <Register />}
-            </div>
-          </div>
-        </div>
+      <ShowPostList />
 
-        {/* <div className="mt-6">
+      {/* <div className="mt-6">
           <div className="text-sm font-normal align-bottom text-right text-slate-600 mt-4">
             v{pkg.version}
           </div>
@@ -52,7 +45,7 @@ export const HomeView: FC = ({}) => {
             Solana Next
           </h1>
         </div> */}
-        {/* <h4 className="md:w-full text-2x1 md:text-4xl text-center text-slate-300 my-2">
+      {/* <h4 className="md:w-full text-2x1 md:text-4xl text-center text-slate-300 my-2">
           <p>
             Unleash the full power of blockchain with Solana and Next.js 13.
           </p>
@@ -70,7 +63,7 @@ export const HomeView: FC = ({}) => {
             </pre>
           </div>
         </div> */}
-        {/* <div className="flex flex-col mt-2">   // SHOW SOL BALANCE
+      {/* <div className="flex flex-col mt-2">   // SHOW SOL BALANCE
           <RequestAirdrop />
           <h4 className="md:w-full text-2xl text-slate-300 my-2">
           {wallet &&
@@ -85,7 +78,6 @@ export const HomeView: FC = ({}) => {
           }
           </h4>
         </div> */}
-      </div>
     </div>
   );
 };
