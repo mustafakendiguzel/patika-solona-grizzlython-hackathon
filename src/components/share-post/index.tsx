@@ -2,11 +2,16 @@ import { FC, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import path from "path";
 import fs from "fs/promises";
+import { getCurrentUser } from "components/login-register/login";
 
 export const PostList: FC = () => {
   const [uploading, setUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
 
   const handleUpload = async () => {
     setUploading(true);
@@ -15,12 +20,30 @@ export const PostList: FC = () => {
       const formData = new FormData();
       formData.append("myImage", selectedFile);
       //  const { data } = await fetch("/api/image");
-      const data = await fetch(`api/upload`, {
+      const token = localStorage.getItem("token");
+
+      const currentUser = await getCurrentUser(token);
+      setCurrentUser(currentUser);
+      const uploadFile = await fetch(`api/upload`, {
         method: "POST",
         body: formData,
-      }).then((data) => {
-        const file = data.json();
       });
+      const file = await uploadFile.json();
+      const postData = {
+        fileUrl: file.fileUrl,
+        input1,
+        input2,
+        userId: currentUser._id,
+      };
+      const sharePost = await fetch(`api/share-post`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+      console.log("CurrentUser" + currentUser + "sharPost", sharePost);
     } catch (error: any) {
       console.log(error.response?.data);
     }
@@ -59,6 +82,10 @@ export const PostList: FC = () => {
               <input
                 className="w-full text-[#000] rounded-md"
                 type="text"
+                value={input1}
+                onChange={(e) => {
+                  setInput1(e.currentTarget.value);
+                }}
               ></input>
             </label>
 
@@ -66,6 +93,10 @@ export const PostList: FC = () => {
               <input
                 className="w-full text-[#000] rounded-md"
                 type="text"
+                value={input2}
+                onChange={(e) => {
+                  setInput2(e.currentTarget.value);
+                }}
               ></input>
             </label>
           </div>
