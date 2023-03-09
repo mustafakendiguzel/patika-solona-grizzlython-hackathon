@@ -34,7 +34,7 @@ export const HomeView: FC = ({}) => {
   const current = isLogginActive ? "Register" : "Login";
   const currentActive = isLogginActive ? "login" : "register";
   return (
-    <div className="md:hero mx-auto p-4">
+    <div className="sm:hero mx-auto p-4">
       <ShowPostList />
 
       {/* <div className="mt-6">
