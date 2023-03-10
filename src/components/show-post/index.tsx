@@ -37,6 +37,7 @@ export const ShowPostList: FC = () => {
        })
      });
   }, []);
+  console.log(posts)
 
   return (
     <div className="flex flex-col m  w-2/5 items-center justify-center">
@@ -46,7 +47,7 @@ export const ShowPostList: FC = () => {
           return(
             <div key={key} className="w-3/5 my-20 mx-4 py-4 px-4 border-4 rounded-xl">
         <div className="relative pb-[110%]">
-          <div className="absolute z-20 top-3 left-12 text-black">Mustafa KEndigüzel</div>
+          <div className="absolute z-20 top-3 left-12 text-black">{post.userName}</div>
           <div className="absolute z-10 left-3 top-2">
           <Image
                     className="rounded-full border-black border-2"

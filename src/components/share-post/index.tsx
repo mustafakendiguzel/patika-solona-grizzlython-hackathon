@@ -34,6 +34,7 @@ export const PostList: FC = () => {
         input1,
         input2,
         userId: currentUser._id,
+        userName: currentUser.username
       };
       const sharePost = await fetch(`api/share-post`, {
         method: "POST",

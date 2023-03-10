@@ -32,11 +32,12 @@ export default async function handler(
   const client = await clientPromise;
   const db = client.db("dApp");
   const { method } = req;
-  const { fileUrl, userId, input1, input2 } = req.body;
-  console.log(fileUrl, userId, input1, input2);
+  const { fileUrl, userId, userName,input1, input2 } = req.body;
+  console.log(fileUrl,userName,userId, input1, input2);
   if (method == "POST") {
     const file = await db.collection("files").insertOne({
       users: new ObjectId(userId as string),
+      userName,
       fileUrl: "http://localhost:3000/images/" + fileUrl,
       select: [input1, input2],
     });
