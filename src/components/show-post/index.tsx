@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs/promises";
 import { getCurrentUser } from "components/login-register/login";
 import Image from "next/image";
-import profilePicture from "../../../public/images/1678410356162_upload-image.jpg";
+import profilePicture from '../../../public/profile-photo.jpg';
 async function showAllPost(currentUser?: any) {
   const post = await fetch(`api/show-post`, {
     headers: { "Content-Type": "application/json" },
