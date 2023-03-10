@@ -37,7 +37,7 @@ export default async function handler(
   if (method == "POST") {
     const file = await db.collection("files").insertOne({
       users: new ObjectId(userId as string),
-      fileUrl: "localhost:3000/images/" + fileUrl,
+      fileUrl: "http://localhost:3000/images/" + fileUrl,
       select: [input1, input2],
     });
     return res.status(400).send({ message: "File created" });
