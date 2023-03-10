@@ -31,7 +31,6 @@ export const ShowPostList: FC = () => {
     const token = localStorage.getItem("token");
       getCurrentUser(token).then((currentUser)=>{
        setCurrentUser(currentUser);
-       console.log(currentUser)
        showAllPost(currentUser).then((post)=>{
         setPosts(post)
        })
@@ -58,9 +57,9 @@ export const ShowPostList: FC = () => {
                   />
           </div>  
           <div className="absolute z-0 left-0 top-0">
-        { < Image
+        { post.fileUrl && < Image
                     className=""
-                    src={profilePicture}
+                    src={post.fileUrl}
                     alt="Picture of the author"
                     width="400"
                     height="400"

@@ -20,7 +20,6 @@ export const AppBar: React.FC = () => {
   const { setUser } = useCurrentUserStore();
   const router = useRouter();
   const user = useCurrentUserStore((s) => s.user);
-  console.log(user);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const isLogginActive = useUserAuthenticateStore((s) => s.isLogginActive);
   const { loggingScreen } = useUserAuthenticateStore();

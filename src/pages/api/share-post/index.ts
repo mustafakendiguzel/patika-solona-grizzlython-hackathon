@@ -33,7 +33,6 @@ export default async function handler(
   const db = client.db("dApp");
   const { method } = req;
   const { fileUrl, userId, userName,input1, input2 } = req.body;
-  console.log(fileUrl,userName,userId, input1, input2);
   if (method == "POST") {
     const file = await db.collection("files").insertOne({
       users: new ObjectId(userId as string),

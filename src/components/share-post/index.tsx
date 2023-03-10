@@ -44,7 +44,6 @@ export const PostList: FC = () => {
         },
         body: JSON.stringify(postData),
       });
-      console.log("CurrentUser" + currentUser + "sharPost", sharePost);
     } catch (error: any) {
       console.log(error.response?.data);
     }
@@ -65,7 +64,6 @@ export const PostList: FC = () => {
                 if (target.files) {
                   const file = target.files[0];
                   setSelectedImage(URL.createObjectURL(file));
-                  console.log(selectedImage);
                   setSelectedFile(file);
                 }
               }}

@@ -27,7 +27,6 @@ export default async function handler(
     oids.push(new ObjectId(item));
     });
     const posts = await db.collection("files").find({ users: {$in : oids}}).toArray()
-    console.log(posts)
     return res.status(200).send(posts);
   }
 }
