@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import profilePicture from "../../../public/profile-picture.jpg";
 import { getCurrentUser } from "components/login-register/login";
+import useCurrentUserStore from "stores/useCurrentUserStore";
 
 async function getAllUser(currentUserId: string) {
   const allUser = await fetch("api/user", {
@@ -53,19 +54,23 @@ export const PeopleList: FC = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [follow, setFollow] = useState(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    getCurrentUser(token)
-      .then((currentUser) => {
-        setCurrentUser(currentUser);
-        return currentUser;
+   useEffect(() => {
+    const test = async() =>{
+      const token = localStorage.getItem("token");
+      const currentUser = await getCurrentUser(token)
+      setCurrentUser(currentUser);
+      const allUser = await getAllUser(currentUser._id)
+      console.log()
+      allUser.map((el:any)=>{
+        const isFollowing = currentUser.following &&  currentUser.following.includes(el._id)
+        el['isFollowing'] = isFollowing ? true:false
       })
-      .then((user) => {
-        getAllUser(user._id).then((users) => {
-          setUsers(users);
-        });
-      });
-  }, []);
+      console.log(allUser)
+      setUsers(allUser);
+    }
+      test()
+   }, []);
+
   return (
     <div className="flex flex-col base-containers pt-5">
       <div className="genelGrid grid grid-cols-4 gap-y-10 gap-x-10">
@@ -93,29 +98,36 @@ export const PeopleList: FC = () => {
                 <button
                   onClick={() => {
                     if (
-                      currentUser.following &&
-                      currentUser.following.includes(user._id)
-                    ) {
+                      user.isFollowing
+                      ) {
                       unFollowUser(currentUser._id, user._id).then(() => {
-                        setFollow("FOLLOW");
+                         const usersMap = users.map((userL)=>{
+                           if(userL._id === user._id) [
+                              userL.isFollowing = false
+                           ]
+                           return userL
+                         })
+                         console.log(usersMap)
+                         setUsers(usersMap);
                       });
                     } else {
                       followUser(currentUser._id, user._id).then((res) => {
-                        setFollow("UNFOLLOW");
+                        const usersMap = users.map((userL)=>{
+                          if(userL._id === user._id) [
+                             userL.isFollowing = true
+                          ]
+                          return userL
+                        })
+                        setUsers(usersMap);
                       });
                     }
                   }}
                   className="followButton mt-2 px-5 rounded-md font-medium "
                 >
-                  {currentUser.following &&
-                    currentUser.following.includes(user._id) && (
-                      <p>{follow || "UNFOLLOW"}</p>
+                  {currentUser.following && (
+                      <p>{user.isFollowing ? "UNFOLLOW": "FOLLOW"}</p>
                     )}
-                  {currentUser.following &&
-                    !currentUser.following.includes(user._id) && (
-                      <p>{follow || "FOLLOW"}</p>
-                    )}
-                  {!currentUser.following && <p>{follow || "FOLLOW"}</p>}
+                  {!currentUser.following && <p>{"FOLLOW"}</p>}
                 </button>
               </div>
             </div>
