@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FC } from "react";
 import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 import { useRouter } from "next/router";
+import { notify } from "utils/notifications";
 
 type registerData = {
   email: string;
@@ -22,8 +23,11 @@ async function register(data: registerData) {
   });
   if (res.status === 201) {
     await res.ok;
+     notify({ type: 'success', message: 'Register successful!'});
   } else {
-    throw await res.json();
+    const error = await res.json();
+    notify({ type: 'error', message: `Error!`, description: error?.message });
+
   }
 }
 

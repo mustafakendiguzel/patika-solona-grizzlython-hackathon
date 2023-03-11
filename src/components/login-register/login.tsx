@@ -5,6 +5,7 @@ import useUserAuthenticateStore from "stores/useUserAuthenticateStore";
 import { FC } from "react";
 import { useRouter } from "next/router";
 import useCurrentUserStore from "stores/useCurrentUserStore";
+import { notify } from "utils/notifications";
 
 type loginData = {
   email: string;
@@ -24,9 +25,16 @@ async function login(data: loginData) {
   if (res.status === 200) {
     const response = await res.json();
     localStorage.setItem("token", response.token);
+    notify({ type: 'success', message: 'Login successful!'});
     return { token: response.token, user: data };
+  } else {
+    const error = await res.json();
+    notify({ type: 'error', message: `Error!`, description: error?.message });
+
   }
-}
+
+  } 
+
 
 export async function getCurrentUser(token: string) {
   const res = await fetch("api/currentUser", {
