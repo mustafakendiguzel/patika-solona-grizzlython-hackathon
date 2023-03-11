@@ -32,7 +32,7 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 Mobile App is Soon:
 
-##Important
+## Important
 
 Do not forgot to and .local.env his requirement for more info please look .local.example
 
