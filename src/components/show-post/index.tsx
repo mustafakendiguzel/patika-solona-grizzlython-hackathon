@@ -112,8 +112,9 @@ export const ShowPostList: FC = () => {
           return(
             <div key={key} className="w-3/5 my-20 mx-4 py-4 px-4 border-4 rounded-xl">
         <div className="relative pb-[110%]">
-          <div className="absolute z-20 top-3 left-12 text-white">{post.userName}</div>
-          <div className="absolute z-10 left-3 top-2">
+          <div className="absolute z-40 top-3 left-12 text-white">{post.userName}</div>
+          <div className="absolute top-1 left-1 w-40 h-10 rounded-md text-black bg-black z-20">SADASDSA</div>
+          <div className="absolute z-30 left-3 top-2">
           <Image
                     className="rounded-full border-black border-2"
                     src={profilePicture}
