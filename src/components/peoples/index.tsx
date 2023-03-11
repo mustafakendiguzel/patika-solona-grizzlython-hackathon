@@ -14,7 +14,7 @@ async function getAllUser(currentUserId: string) {
   return filteredUser;
 }
 
-async function getUser(id: string) {
+export async function getUser(id: string) {
   const findUser = await fetch(`api/user/${id}`, {
     method: "GET",
   });

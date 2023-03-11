@@ -13,7 +13,7 @@ export const BasicsView: FC = ({}) => {
         {/* CONTENT GOES HERE */}
         <div className="text-center">
           <SignMessage />
-          <SendTransaction />
+          {/* <SendTransaction /> */}
           <SendVersionedTransaction />
         </div>
       </div>

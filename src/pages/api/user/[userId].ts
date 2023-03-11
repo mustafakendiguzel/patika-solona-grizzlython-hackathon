@@ -14,7 +14,7 @@ export default async function handler(
 ) {
   const { method } = req;
   const { userId } = req.query;
-  const { followId } = req.body;
+  const { followId,walletId } = req.body;
   const client = await clientPromise;
   const db = client.db("dApp");
   const Collection: Collection<User> = await db.collection("users");
@@ -26,7 +26,7 @@ export default async function handler(
       { projection: { password: 0 } }
     );
     return await res.status(200).send(user);
-  } else if (method == "PATCH" || "PUT") {
+  } else if (method == "PUT") {
     // followers
     const followers = await Collection.findOneAndUpdate(
       {
@@ -46,5 +46,17 @@ export default async function handler(
     return await res
       .status(200)
       .send({ ...followers.value, ...following.value });
+  } else if(method == "PATCH") {
+    if(walletId) {
+      const users = await Collection.findOneAndUpdate(
+        {
+          _id: new ObjectId(userId as string),
+        },
+        { $set: { walletId: walletId as string } },
+        { projection: { password: 0 }, returnDocument: "after" }
+      );
+      return await res.send({ ...users.value });
+    }
+    return await res.json({ok:'ok'})
   }
 }

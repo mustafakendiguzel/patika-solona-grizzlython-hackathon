@@ -23,7 +23,7 @@ export default async function handler(
     var ids = following
 
     var oids = [];
-    ids.forEach(function(item){
+    ids && ids.forEach(function(item){
     oids.push(new ObjectId(item));
     });
     const posts = await db.collection("files").find({ users: {$in : oids}}).toArray()

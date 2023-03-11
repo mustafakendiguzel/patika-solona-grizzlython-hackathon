@@ -1,9 +1,13 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction } from '@solana/web3.js';
+import { Keypair, SystemProgram, Transaction,  PublicKey,TransactionMessage, TransactionSignature, VersionedTransaction } from '@solana/web3.js';
 import { FC, useCallback } from 'react';
 import { notify } from "../utils/notifications";
 
-export const SendTransaction: FC = () => {
+interface TransactionProps {
+    walletID: string
+  }
+
+export const SendTransaction: FC<TransactionProps> = ({walletID}) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
@@ -16,16 +20,17 @@ export const SendTransaction: FC = () => {
 
         let signature: TransactionSignature = '';
         try {
-
+            const destPubkey = new PublicKey(walletID);
+            console.log()
             // Create instructions to send, in this case a simple transfer
             const instructions = [
                 SystemProgram.transfer({
                     fromPubkey: publicKey,
-                    toPubkey: Keypair.generate().publicKey,
+                    toPubkey: destPubkey,
                     lamports: 1_000_000,
                 }),
             ];
-
+            console.log()
             // Get the lates block hash to use on our transaction and confirmation
             let latestBlockhash = await connection.getLatestBlockhash()
 
