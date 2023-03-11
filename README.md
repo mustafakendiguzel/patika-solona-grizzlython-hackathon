@@ -30,11 +30,11 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 ## Features
 
-Mobile App is Soon:
+Mobile App is Soon...
 
 ## Important
 
-Do not forgot to and .local.env his requirement for more info please look .local.example
+Do not forgot to and .env.local his requirement for more info please look .env.example
 
 
 ### Structure
