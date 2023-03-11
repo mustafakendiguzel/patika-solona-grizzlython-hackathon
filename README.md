@@ -1,17 +1,11 @@
 
-# Solana Influencer dApp Next
+# InfLife Social
 
-The Solana dApp Scaffold repos are meant to house good starting scaffolds for ecosystem developers to get up and running quickly with a front end client UI that integrates several common features found in dApps with some basic usage examples. Wallet Integration. State management. Components examples. Notifications. Setup recommendations.
+Change the lives of people you know or love by voting on their posts
 
 Follow                    |  Login                  |     Solana Pay
 :-------------------------:|:-------------------------:|:-------------------------
 ![](follow.png)  |  ![](mainScreen.png) |  ![](solflare.png)
-
-## Getting Started
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-The responsive version for wallets and wallet adapter may not function or work as expected for mobile based on plugin and wallet compatibility. For more code examples and implementations please visit the [Solana Cookbook](https://solanacookbook.com/)
 
 ## Installation
 
@@ -41,22 +35,10 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## Features
 
-Each Scaffold will contain at least the following features:
+Mobile App is Soon:
 
 ```
-Wallet Integration with Auto Connec / Refresh
 
-State Management
-
-Components: One or more components demonstrating state management
-
-Web3 Js: Examples of one or more uses of web3 js including a transaction with a connection provider
-
-Sample navigation and page changing to demonstate state
-
-Clean Simple Styling 
-
-Notifications (optional): Example of using a notification system
 
 ```
 
@@ -110,18 +92,3 @@ pull request!
 You can find tasks on the [project board](https://github.com/solana-dev-adv/solana-dapp-next/projects/1) 
 or create an issue and assign it to yourself.
 
-
-## Learn More Next Js
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
